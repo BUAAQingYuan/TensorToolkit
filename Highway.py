@@ -45,7 +45,7 @@ def highway(x, size, activation, carry_bias=-2.0):
         y = t * g(Wx + b) + (1 - t) * x
         where g is nonlinearity, t is transform gate, and (1 - t) is carry gate.
         the weight(W_T,W) in highway layer must have same size,but you can use fully-connected layers to change dimensionality.
-        you can padding (¡®SAME¡¯) to maintain each layers dimensionality in convolutional layers where each layer can change the output dimensions.
+        you can padding ('SAME') to maintain each layers dimensionality in convolutional layers where each layer can change the output dimensions.
     """
     W_T = tf.Variable(tf.truncated_normal([size, size], stddev=0.1), name="weight_transform")
     b_T = tf.Variable(tf.constant(carry_bias, shape=[size]), name="bias_transform")
