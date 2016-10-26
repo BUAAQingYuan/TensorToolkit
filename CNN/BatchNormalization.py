@@ -43,6 +43,7 @@ def batch_norm(x,epsilon=1e-5,ewma_decay=0.9,train=True):
     # non-convolutional batch normalization
     # axis = [0]
 
+    # train,compute mean and variance base on mini-batch .
     if train:
         ema_apply_op = ewma.apply([mean, variance])
         mean, variance = tf.nn.moments(x, axis)
@@ -51,6 +52,7 @@ def batch_norm(x,epsilon=1e-5,ewma_decay=0.9,train=True):
         with tf.control_dependencies([assign_mean, assign_variance]):
             return  tf.nn.batch_normalization(x, mean, variance, beta, gamma, epsilon, scale_after_normalization=True)
     else:
+        # test, compute mean and variance base on whole-data.
         mean = ewma.average(mean)
         variance = ewma.average(variance)
         local_beta = tf.identity(beta)
